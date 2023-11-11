@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class SuccessResponse {
+public class SuccessResponse implements Response {
 
     private StatusEnum status;
     private String message;

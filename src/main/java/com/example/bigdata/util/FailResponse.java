@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class FailResponse {
+public class FailResponse implements Response{
     private StatusEnum status;
     private String errorMessage;
 

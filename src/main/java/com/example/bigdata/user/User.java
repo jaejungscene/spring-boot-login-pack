@@ -2,6 +2,7 @@ package com.example.bigdata.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,17 +17,21 @@ public class User {
     private Long id;
     private String name;
     private String email;
+    private String salt;
     private String password;
     private String phone;
-    @Column(name = "create_date")
-    private LocalDateTime createDate;
+    @CreationTimestamp
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
 
     @Builder
-    public User(Long id, String name, String email, String password, String phone) {
+    public User(Long id, String name, String email, String salt, String password, String phone, LocalDateTime createAt) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.salt = salt;
         this.password = password;
         this.phone = phone;
+        this.createAt = createAt;
     }
 }
