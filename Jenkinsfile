@@ -4,33 +4,24 @@ pipeline {
             label 'nas01'
             }
       }
-    triggers {
-        pollSCM '* * * * *'
-    }
     stages {
         stage('Build') {
             steps {
-                echo "Building.."
                 sh '''
-                echo "1234" > text.txt
-                ls -al
+                ./gradlew build
                 '''
             }
         }
         stage('Test') {
             steps {
-                echo "Testing.."
                 sh '''
-                cat text.txt
+                echo test...
                 '''
             }
         }
-        stage('Deliver') {
+        stage('Deploy') {
             steps {
-                echo 'Deliver....'
-                sh '''
-                echo "doing delivery stuff.."
-                '''
+                sh "java -jar ./build/libs/bigdata-0.0.1-SNAPSHOT.jar"
             }
         }
     }

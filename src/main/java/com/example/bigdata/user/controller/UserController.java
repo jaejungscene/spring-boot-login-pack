@@ -45,4 +45,9 @@ public class UserController {
     public void logoutUser(){
         loginService.logout();
     }
+
+//    @GetMapping("/get")
+//    public long getSessionID(){
+//        return loginService.getLoginUserId();
+//    }
 }
