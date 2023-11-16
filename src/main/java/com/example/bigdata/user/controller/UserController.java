@@ -2,12 +2,10 @@ package com.example.bigdata.user.controller;
 
 import com.example.bigdata.user.dto.SignInRequestDto;
 import com.example.bigdata.user.dto.SignUpRequestDto;
+import com.example.bigdata.user.dto.UpdateUserRequestDto;
 import com.example.bigdata.user.service.LoginService;
 import com.example.bigdata.user.service.UserService;
-import com.example.bigdata.util.FailResponse;
-import com.example.bigdata.util.Response;
-import com.example.bigdata.util.StatusEnum;
-import com.example.bigdata.util.SuccessResponse;
+import com.example.bigdata.util.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,8 +44,10 @@ public class UserController {
         loginService.logout();
     }
 
-//    @GetMapping("/get")
-//    public long getSessionID(){
-//        return loginService.getLoginUserId();
-//    }
+    @AuthRequired
+    @PutMapping("/my-info")
+    public void updateUser(@Valid @RequestBody final UpdateUserRequestDto requestDto){
+        long id = loginService.getLoginUserId();
+        userService.updateUser(id, requestDto);
+    }
 }

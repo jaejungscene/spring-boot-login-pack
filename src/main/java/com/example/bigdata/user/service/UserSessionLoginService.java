@@ -23,10 +23,10 @@ public class UserSessionLoginService implements LoginService{
 
     @Override
     public void login(SignInRequestDto dto){
-        if (!userRepository.findByEmail(dto.getEmail()).isPresent()){
+        Optional<User> user = userRepository.findByEmail(dto.getEmail());
+        if (!user.isPresent()){
             throw new IllegalArgumentException("존재하지 않는 이메일입니다.");
         }
-        Optional<User> user = userRepository.findByEmail(dto.getEmail());
         CryptoData cryptoData = CryptoData.WithSaltBuilder()
                 .plainText(dto.getPassword())
                 .salt(user.get().getSalt())
@@ -49,7 +49,7 @@ public class UserSessionLoginService implements LoginService{
         try {
             return (long)httpSession.getAttribute(SessionKey.LOGIN_USER_ID);
         } catch (NullPointerException e) {
-            throw new NullPointerException();
+            throw new NullPointerException("현재 유저는 로그인 상태가 아닙니다.");
         }
     }
 }
